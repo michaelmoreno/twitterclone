@@ -1,12 +1,22 @@
 const express = require("express");
+const session = require("express-session");
+const methodOverride = require("method-override");
 const app = express();
 const PORT = 3003;
 const mongoose = require("mongoose");
 const cors = require("cors");
 
 app.use(express.json());
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 
-const whitelist = ["http://localhost:3000"];
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+};
+
+const whitelist = ["http://localhost:3000", "http://localhost:3000/"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.includes(origin)) {
@@ -20,15 +30,13 @@ app.use(cors(corsOptions));
 
 const usersConn = mongoose.createConnection(
   "mongodb://localhost:3000/users",
-  { useNewUrlParser: true }
-  //   options
+  options
 );
 usersConn.model("User", require("./models/users.jsx"));
 
 const tweetsConn = mongoose.createConnection(
   "mongodb://localhost:3000/tweets",
-  { useNewUrlParser: true }
-  //   options
+  options
 );
 tweetsConn.model("Tweet", require("./models/tweets.jsx"));
 
