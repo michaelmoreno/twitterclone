@@ -45,10 +45,16 @@ function Account() {
 
     let shaPassword = sha256(inputPassword);
     let data = {
-      username: inputUsername,
+      userName: inputUsername,
       email: inputEmail,
-      password: shaPassword,
+      password: shaPassword.toString(),
       photoUrl,
+    };
+
+    let dataNoUrl = {
+      userName: inputUsername,
+      email: inputEmail,
+      password: shaPassword.toString(),
     };
 
     if (createAccount) {
@@ -58,7 +64,7 @@ function Account() {
           "Content-Type": "application/json",
         },
         mode: "cors",
-        body: JSON.stringify(data),
+        body: JSON.stringify(dataNoUrl),
       })
         .then((response) => response.json())
         .then((json) => {
@@ -75,7 +81,7 @@ function Account() {
         .then((response) => response.json())
         .then((json) => {
           console.log(json);
-          setUserObject({ json });
+          setUserObject(json);
         });
     }
   }
@@ -84,54 +90,57 @@ function Account() {
   return (
     <div className="row app">
       <h2>{username ? `${username}'s Account` : "Sign In"}</h2>
-      {username ? (
+      {userObject.userName ? (
         <div>
-          <h4>Username: {username}</h4>
-          <h4>Email: {userEmail}</h4>
-          <img src={photoUrl}></img>
+          <h4>Username: {userObject.userName}</h4>
+          <h4>Email: {userObject.email}</h4>
+          <img src={userObject.photoUrl}></img>
           <div>
             <h5>Your Tweets</h5>
             <ul>
-              {yourTweets.map((tweet) => {
-                return (
-                  <div>
-                    <p>{tweet.text}</p>
-                    <p>{tweet.dateCreated}</p>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        handleDelete(tweet._id);
-                      }}
-                    >
-                      Delete Tweet
-                    </button>
-                  </div>
-                );
-              })}
+              {yourTweets &&
+                yourTweets.map((tweet) => {
+                  return (
+                    <div>
+                      <p>{tweet.text}</p>
+                      <p>{tweet.dateCreated}</p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleDelete(tweet._id);
+                        }}
+                      >
+                        Delete Tweet
+                      </button>
+                    </div>
+                  );
+                })}
             </ul>
           </div>
           <div>
             <h5>Your Replies</h5>
             <ul>
-              {yourReplies.map((reply) => {
-                return (
-                  <div>
-                    <p>Replying to {`${reply.tweetToReply.author}`}</p>
-                    <p>{reply.text}</p>
-                    <p>{reply.dateCreated}</p>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        handleDelete(reply._id, "reply");
-                      }}
-                    >
-                      Delete Reply
-                    </button>
-                  </div>
-                );
-              })}
+              {yourReplies &&
+                yourReplies.map((reply) => {
+                  return (
+                    <div>
+                      <p>Replying to {`${reply.tweetToReply.author}`}</p>
+                      <p>{reply.text}</p>
+                      <p>{reply.dateCreated}</p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleDelete(reply._id, "reply");
+                        }}
+                      >
+                        Delete Reply
+                      </button>
+                    </div>
+                  );
+                })}
             </ul>
           </div>
+          <button onClick={() => setUserObject({})}>Sign Out</button>
         </div>
       ) : (
         <div id="createAccountScreen">
@@ -149,6 +158,7 @@ function Account() {
               type="button"
               onClick={() => {
                 setSignIn(!signIn);
+
                 setCreateAccount(false);
               }}
             >
@@ -157,7 +167,7 @@ function Account() {
           </>
           <div
             style={{
-              display: `${createAccount ? "initial" : "none"}`,
+              display: `${createAccount || signIn ? "initial" : "none"}`,
               // borderRadius: "25px",
               // width: "50vw",
               // backgroundColor: "rgb(57, 224, 227, 0.9)",

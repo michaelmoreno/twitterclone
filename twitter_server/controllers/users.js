@@ -2,14 +2,35 @@ const express = require("express");
 const users = express.Router();
 const mongoose = require("mongoose");
 
-const User = require("../models/users.jsx");
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+};
+
+const usersConn = mongoose.createConnection(
+  "mongodb://localhost:27017/users",
+  options
+);
+const User = usersConn.model("User", require("../models/users.jsx"));
+
 // const { create } = require("../models/users.jsx");
 
-// User.init();
+User.init();
 
 // index
 users.get("/", (req, res) => {
   User.find({}, (err, foundUsers) => {
+    if (err) {
+      console.log(err.message);
+    } else {
+      res.status(200).json(foundUsers);
+    }
+  });
+});
+
+users.post("/sign-in", (req, res) => {
+  User.findOne({ userEmail: req.body.userEmail }, (err, foundUsers) => {
     if (err) {
       console.log(err.message);
     } else {

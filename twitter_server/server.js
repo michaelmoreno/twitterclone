@@ -26,18 +26,6 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-const usersConn = mongoose.createConnection(
-  "mongodb://localhost:27017/users",
-  options
-);
-usersConn.model("User", require("./models/users.jsx"));
-
-const tweetsConn = mongoose.createConnection(
-  "mongodb://localhost:27017/tweets",
-  options
-);
-tweetsConn.model("Tweet", require("./models/tweets.jsx"));
-
 const tweetsController = require("./controllers/tweets.js");
 app.use("/tweets", tweetsController);
 
