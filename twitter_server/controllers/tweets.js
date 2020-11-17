@@ -2,8 +2,19 @@ const express = require("express");
 const tweets = express.Router();
 const mongoose = require("mongoose");
 
-const Tweet = require("../models/tweets.jsx");
-const { create } = require("../models/tweets.jsx");
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+};
+
+const tweetsConn = mongoose.createConnection(
+  "mongodb://localhost:27017/tweets",
+  options
+);
+const Tweet = tweetsConn.model("Tweet", require("../models/tweets.jsx"));
+
+Tweet.init();
 
 // index
 tweets.get("/", (req, res) => {

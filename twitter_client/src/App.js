@@ -31,20 +31,22 @@ function App() {
   return (
     <div id="container">
       <Navbar className="Navbar" />
-      <Switch>
-        <Route exact path="/">
-          <Newsfeed />
-        </Route>
-        <Route path="/account">
-          <Account />
-        </Route>
-        <Route path="/tweet">
-          <NewTweet />
-        </Route>
-        <Route path="/reply">
-          <NewReply />
-        </Route>
-      </Switch>
+      <div className="row">
+        <Switch>
+          <Route exact path="/">
+            <Newsfeed />
+          </Route>
+          <Route path="/account">
+            <Account />
+          </Route>
+          <Route path="/tweet">
+            <NewTweet />
+          </Route>
+          <Route path="/reply">
+            <NewReply />
+          </Route>
+        </Switch>
+      </div>
       <Navbar className="Navbar" />
     </div>
   );
