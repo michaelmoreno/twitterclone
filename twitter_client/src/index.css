@@ -1,0 +1,60 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.Navbar {
+  width: 80vw;
+  margin-left: 10vw;
+  border-radius: 25px;
+  background-color: rgb(57, 224, 227, 0.4);
+}
+
+.app {
+  margin: 0 auto;
+  position: relative;
+  display: inline-block;
+  margin-left: 30vw;
+  margin-right: 30vw;
+}
+
+.leftSome {
+  margin-left: 10vw;
+}
+
+.leftBit {
+  margin-left: 3vw;
+}
+
+.rightSome {
+  margin-right: 10vw;
+}
+
+.rightBit {
+  margin-right: 3vw;
+}
+#createAccountScreen {
+  border-radius: 25px;
+  width: 50vw;
+  background-color: rgb(57, 224, 227, 0.1);
+}
