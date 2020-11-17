@@ -6,7 +6,7 @@ const cors = require("cors");
 
 app.use(express.json());
 
-const whitelist = ["localhost:3000"];
+const whitelist = ["http://localhost:3000"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.includes(origin)) {
@@ -19,13 +19,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 const usersConn = mongoose.createConnection(
-  "mongodb://localhost:3000/users"
+  "mongodb://localhost:3000/users",
+  { useNewUrlParser: true }
   //   options
 );
 usersConn.model("User", require("./models/users.jsx"));
 
 const tweetsConn = mongoose.createConnection(
-  "mongodb://localhost:3000/tweets"
+  "mongodb://localhost:3000/tweets",
+  { useNewUrlParser: true }
   //   options
 );
 tweetsConn.model("Tweet", require("./models/tweets.jsx"));

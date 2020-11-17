@@ -3,7 +3,9 @@ const users = express.Router();
 const mongoose = require("mongoose");
 
 const User = require("../models/users.jsx");
-const { create } = require("../models/users.jsx");
+// const { create } = require("../models/users.jsx");
+
+User.init();
 
 // index
 users.get("/", (req, res) => {
