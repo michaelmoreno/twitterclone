@@ -41,11 +41,25 @@ users.post("/sign-in", (req, res) => {
 
 // create
 users.post("/create", (req, res) => {
-  User.create(req.body, (error, createdUser) => {
-    if (error) {
-      console.log(error.message);
+  console.log(req.body);
+
+  User.findOne({ email: req.body.email }, (err, foundUsers) => {
+    if (err) {
+      console.log(err.message);
     } else {
-      res.status(200).send(createdUser);
+      if (foundUsers) {
+        console.log("found user");
+        res.status(200).send({ error: "user already exists" });
+      } else {
+        console.log("user doesn't exist yet");
+        User.create(req.body, (error, createdUser) => {
+          if (error) {
+            console.log(error.message);
+          } else {
+            res.status(200).send(createdUser);
+          }
+        });
+      }
     }
   });
 });

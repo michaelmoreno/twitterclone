@@ -18,6 +18,7 @@ function Newsfeed() {
     setEditTweet,
     tweetToReply,
     setTweetToReply,
+    handleDelete,
   } = useContext(Context);
   return (
     <div id="homePageTweets" className="app">
@@ -27,7 +28,9 @@ function Newsfeed() {
         return (
           <div className="column">
             <div className="op">
-              <h3>{tweet.author}</h3>
+              <Link to={`/user/${tweet.author}`}>
+                <h3>{tweet.authorName}</h3>
+              </Link>
               <p>{tweet.text}</p>
               <p>{tweet.dateCreated}</p>
               <p
@@ -43,7 +46,7 @@ function Newsfeed() {
                   }`,
                 }}
               >
-                <button>Delete</button>
+                <button onClick={() => handleDelete(tweet._id)}>Delete</button>
                 <button>Edit</button>
               </div>
             </div>

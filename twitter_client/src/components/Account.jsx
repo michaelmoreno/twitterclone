@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../Context.jsx";
+import { Link } from "react-router-dom";
 import sha256 from "crypto-js/sha256";
 
 function Account() {
@@ -31,6 +32,8 @@ function Account() {
   //
   const [createAccount, setCreateAccount] = useState(true);
   const [signIn, setSignIn] = useState(true);
+
+  const [userAlreadyExists, setUserAlreadyExists] = useState(false);
 
   useEffect(() => {
     if (showInputs) {
@@ -64,24 +67,37 @@ function Account() {
           "Content-Type": "application/json",
         },
         mode: "cors",
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          console.log(response);
+          response.json();
+        })
+        .then((json) => {
+          console.log(json);
+          if (!json) {
+            console.log("error");
+            setUserAlreadyExists(true);
+          } else {
+            console.log("no error");
+            setUserObject(json);
+            setUserAlreadyExists(false);
+          }
+        });
+    } else if (signIn) {
+      fetch("http://localhost:3003/users/sign-in", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
         body: JSON.stringify(dataNoUrl),
       })
         .then((response) => response.json())
         .then((json) => {
           console.log(json);
-          setUserObject({ json });
-        });
-    } else if (signIn) {
-      fetch("http://localhost:3003/users/sign-in", {
-        method: "POST",
-        mode: "cors",
-        "Content-type": "application/json",
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          console.log(json);
           setUserObject(json);
+          setUserAlreadyExists(false);
         });
     }
   }
@@ -89,8 +105,9 @@ function Account() {
   // have to populate yourtweets and yourreplies
   return (
     <div className="row app">
-      <h2>{username ? `${username}'s Account` : "Sign In"}</h2>
-      {userObject.userName ? (
+      <h2>{username ? `${username}'s Account` : ""}</h2>
+      {userAlreadyExists && <h4>User Already Exists!</h4>}
+      {userObject && userObject.userName ? (
         <div>
           <h4>Username: {userObject.userName}</h4>
           <h4>Email: {userObject.email}</h4>
@@ -116,9 +133,12 @@ function Account() {
                   );
                 })}
             </ul>
+            <Link to="/tweet">
+              <button>Create Tweet</button>
+            </Link>
           </div>
           <div>
-            <h5>Your Replies</h5>
+            <h5>Replies To You</h5>
             <ul>
               {yourReplies &&
                 yourReplies.map((reply) => {
@@ -174,7 +194,7 @@ function Account() {
             }}
           >
             <span className="row">
-              <h4 className="leftBit">Create Account:</h4>
+              <h4 className="leftBit"></h4>
               <button
                 className="rightBit"
                 onClick={() => {
@@ -210,21 +230,23 @@ function Account() {
                 }}
                 placeholder="Password"
               ></input>
-              <input
-                type="text"
-                value={photoUrl}
-                onChange={(e) => {
-                  setPhotoUrl(e.target.value);
-                }}
-                placeholder="Photo URL"
-              ></input>
+              {!signIn && (
+                <input
+                  type="text"
+                  value={photoUrl}
+                  onChange={(e) => {
+                    setPhotoUrl(e.target.value);
+                  }}
+                  placeholder="Photo URL"
+                ></input>
+              )}
               <br></br>
               <button
                 onClick={() => {
                   handleAccountRequest();
                 }}
               >
-                {signIn ? "Sign In" : "Sign Up"}
+                {signIn ? "Sign In" : "Create Account"}
               </button>
             </div>
           </div>

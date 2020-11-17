@@ -58,3 +58,8 @@ code {
   width: 50vw;
   background-color: rgb(57, 224, 227, 0.1);
 }
+
+.textBox {
+  height: 30vh;
+  width: 60vw;
+}

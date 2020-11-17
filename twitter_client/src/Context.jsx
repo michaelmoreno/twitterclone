@@ -11,6 +11,7 @@ function ContextProvider({ children }) {
   const [anonUser, setAnonUser] = useState(true);
   const [allTweets, setAllTweets] = useState([]);
 
+  const [yourTweets, setYourTweets] = useState([]);
   const [tweetToReply, setTweetToReply] = useState({});
 
   //
@@ -18,9 +19,13 @@ function ContextProvider({ children }) {
   const [editTweet, setEditTweet] = useState(false);
 
   function handleDelete(id) {
+    console.log("beginning delete", id);
     fetch(`http://localhost:3003/tweets/${id}`, {
       method: "DELETE",
-      "Content-type": "application/json",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
     })
       .then((response) => response.json())
       .then((json) => {
@@ -36,6 +41,24 @@ function ContextProvider({ children }) {
       .then((json) => setAllTweets(json));
   }
 
+  function myTweets(id) {
+    fetch(`http://localhost:3003/tweets/by-user/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+    })
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((json) => {
+        console.log(json);
+        setYourTweets(json);
+      });
+  }
+
   useEffect(() => {
     queryTweets();
   }, []);
@@ -43,7 +66,9 @@ function ContextProvider({ children }) {
   function handleLike(id) {
     fetch(`http://localhost:3003/tweets/${id}`, {
       method: "POST",
-      "Content-type": "application/json",
+      headers: {
+        "Content-type": "application/json",
+      },
       body: JSON.stringify({ userEmail }),
     })
       .then((response) => response.json())
@@ -52,6 +77,23 @@ function ContextProvider({ children }) {
         console.log(json);
       });
   }
+
+  useEffect(() => {
+    if (userObject && userObject.userName) {
+      setUsername(userObject.userName);
+      console.log(username);
+
+      myTweets(userObject._id);
+    } else {
+      setUsername("");
+    }
+  }, [userObject]);
+
+  useEffect(() => {
+    if (userObject && userObject.userName) {
+      myTweets(userObject._id);
+    }
+  }, [allTweets]);
 
   return (
     <Context.Provider
@@ -73,6 +115,9 @@ function ContextProvider({ children }) {
         editTweet,
         setEditTweet,
         handleDelete,
+        yourTweets,
+        setYourTweets,
+        queryTweets,
       }}
     >
       {children}

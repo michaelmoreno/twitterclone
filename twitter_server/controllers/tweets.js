@@ -18,7 +18,7 @@ Tweet.init();
 
 // index
 tweets.get("/", (req, res) => {
-  tweet.find({}, (err, foundTweets) => {
+  Tweet.find({}, (err, foundTweets) => {
     if (err) {
       console.log(err.message);
     } else {
@@ -27,15 +27,30 @@ tweets.get("/", (req, res) => {
   });
 });
 
-// create
-tweets.post("/", (req, res) => {
-  Tweet.create(req.body, (error, createdTweet) => {
-    if (error) {
-      console.log(error.message);
+tweets.get("/by-user/:id", (req, res) => {
+  console.log("getting user tweets.");
+  Tweet.find({ author: req.params.id }, (err, foundTweets) => {
+    if (err) {
+      console.log(err.message);
     } else {
-      res.status(200).send(createdTweet);
+      console.log(foundTweets);
+      res.status(200).json(foundTweets);
     }
   });
+});
+
+// create
+tweets.post("/", (req, res) => {
+  Tweet.create(
+    { author: req.body.author, text: req.body.text },
+    (error, createdTweet) => {
+      if (error) {
+        console.log(error.message);
+      } else {
+        res.status(200).send(createdTweet);
+      }
+    }
+  );
 });
 
 // update

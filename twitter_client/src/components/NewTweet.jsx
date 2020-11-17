@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../Context.jsx";
+import { Link } from "react-router-dom";
 
 function NewTweet() {
   const {
@@ -16,39 +17,59 @@ function NewTweet() {
     handleLike,
     editTweet,
     setEditTweet,
+    queryTweets,
   } = useContext(Context);
 
   const [tweetText, setTweetText] = useState("");
 
   function publishTweet() {
-    fetch("https://localhost:3003/tweets", {
+    console.log("publish tweet clicked");
+    fetch("http://localhost:3003/tweets/", {
       method: "POST",
-      "Content-type": "application/json",
-      body: JSON.stringify({ tweetText, userEmail }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+      body: JSON.stringify({
+        author: userObject._id,
+        userEmail,
+        text: tweetText,
+        authorName: username,
+      }),
     })
-      .then((response) => response.json())
-      .then((json) => console.log(json));
+      .then((response) => {
+        return response.json();
+      })
+      .then((json) => {
+        console.log(json);
+        queryTweets();
+      });
   }
 
   return (
     <div className="row app">
+      <br></br>
       <input
+        className="textBox"
         type="textarea"
         value={tweetText}
         onChange={(e) => {
           setTweetText(e.target.value);
         }}
-        placeholder="Your Name"
+        placeholder="What would you like to say"
       ></input>
-      <button
-        type="button"
-        disabled={!username}
-        onClick={() => {
-          publishTweet();
-        }}
-      >
-        Post Tweet
-      </button>
+      <Link to="/account">
+        <button
+          type="button"
+          disabled={!username}
+          onClick={() => {
+            publishTweet();
+          }}
+        >
+          Post Tweet
+        </button>
+      </Link>
+      <br></br>
     </div>
   );
 }
