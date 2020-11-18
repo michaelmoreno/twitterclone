@@ -232,7 +232,7 @@ function Account() {
                   onChange={(e) => {
                     setPhotoUrl(e.target.value);
                   }}
-                  placeholder="Photo URL"
+                  placeholder="Photo URL - It's Required"
                 ></input>
               )}
               <br></br>
