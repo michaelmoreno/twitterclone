@@ -85,8 +85,8 @@ users.post("/create", (req, res) => {
     if (err) {
       console.log(err.message);
     } else {
-      if (foundUsers) {
-        console.log("found user");
+      if (foundUsers[0]) {
+        console.log("found user", foundUsers[0]);
         res.status(200).send({ error: "user already exists" });
       } else {
         console.log("user doesn't exist yet");
