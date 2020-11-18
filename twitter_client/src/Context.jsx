@@ -14,7 +14,9 @@ function ContextProvider({ children }) {
 
   const [yourTweets, setYourTweets] = useState([]);
   const [tweetToReply, setTweetToReply] = useState({});
+  //
 
+  const [viewUserId, setViewUserId] = useState("");
   //
 
   const [editTweet, setEditTweet] = useState(false);
@@ -142,6 +144,8 @@ function ContextProvider({ children }) {
         queryTweets,
         allUsers,
         setAllUsers,
+        viewUserId,
+        setViewUserId,
       }}
     >
       {children}

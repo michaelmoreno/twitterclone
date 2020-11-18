@@ -5,6 +5,7 @@ import { Link, Switch, Route } from "react-router-dom";
 import { Context } from "./Context.jsx";
 import Newsfeed from "./components/Newsfeed";
 import Account from "./components/Account";
+import ViewUser from "./components/ViewUser";
 
 import Navbar from "./components/Navbar";
 import NewReply from "./components/NewReply";
@@ -44,6 +45,9 @@ function App() {
           </Route>
           <Route path="/reply">
             <NewReply />
+          </Route>
+          <Route path="/user">
+            <ViewUser />
           </Route>
         </Switch>
       </div>

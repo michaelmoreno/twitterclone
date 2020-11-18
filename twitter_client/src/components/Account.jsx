@@ -135,21 +135,7 @@ function Account() {
             <ul>
               {yourReplies &&
                 yourReplies.map((reply) => {
-                  return (
-                    <div>
-                      <p>Replying to {`${reply.tweetToReply.author}`}</p>
-                      <p>{reply.text}</p>
-                      <p>{reply.dateCreated}</p>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleDelete(reply._id, "reply");
-                        }}
-                      >
-                        Delete Reply
-                      </button>
-                    </div>
-                  );
+                  return <Tweet tweet={reply} hideReplies={true} />;
                 })}
             </ul>
           </div>

@@ -5,6 +5,8 @@ import { Context } from "../Context.jsx";
 function Tweet(props) {
   let tweet = props.tweet;
 
+  let hide = props.hideReplies;
+
   // {tweet.replies.map((reply) => {
   //     <div className="reply">
   //       <h4>{reply.authorName}</h4>
@@ -21,6 +23,7 @@ function Tweet(props) {
     username,
     allTweets,
     allUsers,
+    setViewUserId,
   } = useContext(Context);
 
   const [allReplies, setAllReplies] = useState([]);
@@ -28,7 +31,7 @@ function Tweet(props) {
   const [hideReplies, setHideReplies] = useState(false);
 
   useEffect(() => {
-    if (tweet.hideReplies) {
+    if (hide) {
       setHideReplies(true);
     }
   }, []);
@@ -64,7 +67,13 @@ function Tweet(props) {
         <div className="row">
           <div className="row spaceAround">
             <img src={`${userPhoto}`} className="tinyPhoto leftBit"></img>
-            <Link className="leftBit" to={`/user/${tweet.author}`}>
+            <Link
+              className="leftBit"
+              to={`/user/${tweet.author}`}
+              onClick={() => {
+                setViewUserId(tweet.author);
+              }}
+            >
               <h3>{tweet.authorName}</h3>
             </Link>
           </div>
