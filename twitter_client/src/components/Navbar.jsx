@@ -14,14 +14,28 @@ function Navbar() {
     setAnonUser,
     allTweets,
     handleLike,
+    setDarkMode,
+    darkMode,
   } = useContext(Context);
   return (
     <div className="column Navbar">
       <nav className="row">
-        <Link className="row leftSome" to="/account">
+        <img
+          className="teensyImg leftBit"
+          style={{ width: "2vw" }}
+          src={
+            darkMode
+              ? "https://i.ibb.co/6Pq9yhP/sun.png"
+              : "https://i.ibb.co/zZSVYp3/muslim.png"
+          }
+          onClick={() => {
+            setDarkMode(!darkMode);
+          }}
+        ></img>
+        <Link className="row leftSome heavy" to="/account">
           {username ? `${username}'s Account` : "Sign In"}
         </Link>
-        <Link className="row rightSome" to="/">
+        <Link className="row rightSome heavy" to="/">
           Home
         </Link>
       </nav>

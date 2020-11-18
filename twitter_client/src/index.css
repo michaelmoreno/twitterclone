@@ -133,3 +133,12 @@ code {
 .bigPic {
   border-radius: 25px;
 }
+
+.heavy {
+  font-size: x-large;
+}
+
+.downBit {
+  top: 300%;
+  position: relative;
+}

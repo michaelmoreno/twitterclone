@@ -21,6 +21,16 @@ function ContextProvider({ children }) {
   //
 
   const [editTweet, setEditTweet] = useState(false);
+  //
+  //
+  //
+  //
+  //
+  //
+  const [darkMode, setDarkMode] = useState(false);
+
+  const [primaryColor, setPrimaryColor] = useState("lightblue");
+  const [secondaryColor, setSecondaryColor] = useState("darkblue");
 
   function handleEdit(tweet) {
     setEditTweet(true);
@@ -165,6 +175,8 @@ function ContextProvider({ children }) {
         setTweetToEdit,
         handleEdit,
         queryUsers,
+        darkMode,
+        setDarkMode,
       }}
     >
       {children}

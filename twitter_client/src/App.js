@@ -28,10 +28,14 @@ function App() {
     setAnonUser,
     allTweets,
     handleLike,
+    darkMode,
   } = useContext(Context);
 
   return (
-    <div id="container">
+    <div
+      id="container"
+      style={{ backgroundColor: `${darkMode ? "black" : "white"}` }}
+    >
       <Navbar className="Navbar" />
       <div className="row">
         <Switch>
