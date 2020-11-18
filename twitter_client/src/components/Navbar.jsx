@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../Context.jsx";
 import { Link } from "react-router-dom";
+import NavbarOptions from './NavbarOptions'
 
 function Navbar() {
   const {
@@ -18,10 +19,9 @@ function Navbar() {
     darkMode,
   } = useContext(Context);
   return (
-    <div className="Navbar">
-      <nav className="row">
-        <img
-          className="teensyImg leftBit"
+    <div>
+
+<img
           style={{ width: "2vw" }}
           src={
             darkMode
@@ -32,14 +32,20 @@ function Navbar() {
             setDarkMode(!darkMode);
           }}
         ></img>
-        <Link className="row leftSome heavy" to="/account">
-          {username ? `${username}'s Account` : "Sign In"}
-        </Link>
-        <Link className="row rightSome heavy" to="/">
-          Home
-        </Link>
-      </nav>
+
+    <Link to="/">
+    <NavbarOptions text="Home" />
+    </Link>
+
+    <Link to="/account">
+    {username ? `${username}'s Account` : <NavbarOptions text="sign in" />}
+    </Link>
+
+    {/* </div> */}
+    
+    {/* //Jesse's code */}
     </div>
+    
   );
 }
 
