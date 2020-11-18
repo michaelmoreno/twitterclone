@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar";
 import NewReply from "./components/NewReply";
 import NewTweet from "./components/NewTweet";
 import EditAccount from "./components/EditAccount";
+import Feed from "./components/Feed";
 
 // two models: one for authentication and one for tweets
 
@@ -33,12 +34,12 @@ function App() {
 
   return (
     <div
-      id="container"
+      className="appMain"
       style={{ backgroundColor: `${darkMode ? "black" : "white"}` }}
     >
       <Navbar className="Navbar" />
-      <div className="row">
-        <Switch>
+      <Feed />
+      {/* <Switch>
           <Route exact path="/">
             <Newsfeed />
           </Route>
@@ -57,8 +58,7 @@ function App() {
           <Route path="/user">
             <ViewUser />
           </Route>
-        </Switch>
-      </div>
+        </Switch> */}
       <Navbar className="Navbar" />
     </div>
   );

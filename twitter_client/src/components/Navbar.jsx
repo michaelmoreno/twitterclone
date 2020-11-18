@@ -18,7 +18,7 @@ function Navbar() {
     darkMode,
   } = useContext(Context);
   return (
-    <div className="column Navbar">
+    <div className="Navbar">
       <nav className="row">
         <img
           className="teensyImg leftBit"
