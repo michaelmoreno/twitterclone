@@ -109,3 +109,23 @@ code {
   width: 70px;
   height: auto;
 }
+
+.teensyImg {
+  /* border-radius: 100%; */
+  width: 20px;
+  height: auto;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.likeNumber {
+  left: 130%;
+  margin-top: -100%;
+  position: relative;
+}
+
+.bigPic {
+  border-radius: 25px;
+}

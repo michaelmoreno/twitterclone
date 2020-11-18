@@ -102,6 +102,71 @@ tweets.put("/:id", (req, res) => {
   );
 });
 
+tweets.patch("/edit", (req, res) => {
+  console.log("begin edit tweet", req.body);
+
+  Tweet.findOneAndUpdate(
+    { _id: req.body.tweetId },
+    { text: req.body.tweetText },
+    (error, updatedTweet) => {
+      if (error) {
+        console.log(error.message);
+      } else {
+        console.log(updatedTweet);
+        res.status(200).json(updatedTweet);
+      }
+    }
+  );
+});
+
+tweets.patch("/:id/like", (req, res) => {
+  console.log("beginning like function", req.body);
+
+  Tweet.findById(req.params.id, (err, foundTweet) => {
+    if (err) {
+      console.log(err.message);
+    } else {
+      // get likes from foundTweet
+      // also has to be a user function.
+      if (req.body.bool) {
+        // liking tweet
+        Tweet.findOneAndUpdate(
+          { _id: req.params.id },
+          { likes: [...foundTweet.likes, req.body.uid] },
+          { new: true },
+          (error, updatedTweet) => {
+            if (error) {
+              console.log(error.message);
+            } else {
+              console.log(updatedTweet);
+              res.status(200).json(updatedTweet);
+            }
+          }
+        );
+      } else {
+        // unliking tweet
+        let arr = [...foundTweet.likes].splice(
+          foundTweet.likes.indexOf(req.params.id),
+          1
+        );
+        Tweet.findOneAndUpdate(
+          { _id: req.params.id },
+          { likes: [...arr] },
+          { new: true },
+          (error, updatedTweet) => {
+            if (error) {
+              console.log(error.message);
+            } else {
+              console.log(updatedTweet);
+              res.status(200).json(updatedTweet);
+            }
+          }
+        );
+      }
+    }
+  });
+});
+
 // delete
 tweets.delete("/:id", (req, res) => {
   Tweet.findByIdAndRemove(req.params.id, (error, deletedTweet) => {

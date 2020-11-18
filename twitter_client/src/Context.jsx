@@ -14,12 +14,19 @@ function ContextProvider({ children }) {
 
   const [yourTweets, setYourTweets] = useState([]);
   const [tweetToReply, setTweetToReply] = useState({});
+  const [tweetToEdit, setTweetToEdit] = useState({});
   //
 
   const [viewUserId, setViewUserId] = useState("");
   //
 
   const [editTweet, setEditTweet] = useState(false);
+
+  function handleEdit(tweet) {
+    setEditTweet(true);
+    setTweetToEdit(tweet);
+    setTweetToReply({});
+  }
 
   function handleDelete(id) {
     console.log("beginning delete", id);
@@ -73,18 +80,28 @@ function ContextProvider({ children }) {
     queryUsers();
   }, []);
 
-  function handleLike(id) {
-    fetch(`http://localhost:3003/tweets/${id}`, {
-      method: "POST",
+  function handleLike(id, bool) {
+    fetch(`http://localhost:3003/tweets/${id}/like`, {
+      method: "PATCH",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ userEmail }),
+      body: JSON.stringify({ uid: userObject._id.toString(), bool: bool }),
     })
       .then((response) => response.json())
       .then((json) => {
-        queryTweets();
+        // queryTweets();
         console.log(json);
+
+        fetch(`http://localhost:3003/users/${id}/like`, {
+          method: "PATCH",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({ uid: userObject._id.toString(), bool: bool }),
+        })
+          .then((response) => response.json())
+          .then((json) => console.log("user likes updated", json, bool));
       });
   }
 
@@ -146,6 +163,9 @@ function ContextProvider({ children }) {
         setAllUsers,
         viewUserId,
         setViewUserId,
+        tweetToEdit,
+        setTweetToEdit,
+        handleEdit,
       }}
     >
       {children}

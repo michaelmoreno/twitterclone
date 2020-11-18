@@ -24,6 +24,7 @@ function Tweet(props) {
     allTweets,
     allUsers,
     setViewUserId,
+    handleEdit,
   } = useContext(Context);
 
   const [allReplies, setAllReplies] = useState([]);
@@ -40,7 +41,7 @@ function Tweet(props) {
     let newArr = [];
 
     allTweets.forEach((i) => {
-      if (tweet.replies.includes(i._id)) {
+      if (tweet.replies && tweet.replies.includes(i._id)) {
         newArr.push(i);
       }
     });
@@ -54,12 +55,52 @@ function Tweet(props) {
     console.log("running effect");
     allUsers.map((user) => {
       console.log(user);
-      if (tweet.author.toString() == user._id.toString()) {
+      if (
+        tweet.author &&
+        user._id &&
+        tweet.author.toString() == user._id.toString()
+      ) {
         console.log(user);
         setUserPhoto(user.photoUrl);
       }
     });
   }, [hideReplies]);
+
+  const [isLiked, setIsLiked] = useState(false);
+  const [likesNumber, setLikesNumber] = useState(0);
+
+  const [loadCounter, setLoadCounter] = useState(0);
+
+  useEffect(() => {
+    if (tweet.likes) {
+      setLikesNumber(tweet.likes.length);
+    }
+  }, []);
+
+  function toggleLiked() {
+    if (userObject && userObject._id) {
+      if (isLiked) {
+        setLikesNumber(likesNumber - 1);
+      } else {
+        setLikesNumber(likesNumber + 1);
+      }
+
+      handleLike(tweet._id, !isLiked);
+      setIsLiked(!isLiked);
+    }
+  }
+
+  useEffect(() => {
+    if (
+      userObject &&
+      userObject.likes &&
+      userObject.likes.includes(tweet._id)
+    ) {
+      setIsLiked(true);
+    } else {
+      setIsLiked(false);
+    }
+  }, [userObject, allTweets]);
 
   return (
     <div className="column tweetBody">
@@ -83,15 +124,28 @@ function Tweet(props) {
             </p>
           )}
         </div>
-        <p className="tweetText">{tweet.text}</p>
+        <p className="tweetText">
+          {props.editing ? `${props.editing}` : tweet.text}
+        </p>
         <p>{tweet.dateCreated}</p>
-        <p
+        <span
+          className="inline"
           onClick={() => {
-            handleLike(tweet._id);
+            toggleLiked();
           }}
-        >{`<3: ${tweet.likes.length}`}</p>
+        >
+          <img
+            className="teensyImg"
+            src={`${
+              isLiked
+                ? "https://i.ibb.co/bRgYpnt/heart-full.png"
+                : "https://i.ibb.co/26SJ4Hd/heart.png"
+            }`}
+          ></img>
+          <p className="likeNumber">{likesNumber}</p>
+        </span>
         <div
-          className="column"
+          className="column leftBit"
           style={{
             display: `${
               userObject && userObject._id === tweet.author ? "initial" : "none"
@@ -99,7 +153,9 @@ function Tweet(props) {
           }}
         >
           <button onClick={() => handleDelete(tweet._id)}>Delete</button>
-          <button>Edit</button>
+          <Link to="/tweet">
+            <button onClick={() => handleEdit(tweet)}>Edit</button>
+          </Link>
         </div>
       </div>
       {userObject && userObject._id !== tweet.author && (
@@ -116,11 +172,7 @@ function Tweet(props) {
             return <Tweet tweet={reply} />;
           })}
       </div>
-      <button
-        // onLoad={() => handleReplies()}
-        onClick={() => setHideReplies(!hideReplies)}
-        type="button"
-      >
+      <button onClick={() => setHideReplies(!hideReplies)} type="button">
         {hideReplies ? "Show Replies" : "Hide Replies"}
       </button>
     </div>

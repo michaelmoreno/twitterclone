@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema(
     email: { type: String, required: true },
     password: { type: String, required: true },
     tweets: [{ type: String, required: true }],
-    likes: [{ id: { type: String } }],
+    likes: [{ type: String }],
   },
   { timestamps: true }
 );

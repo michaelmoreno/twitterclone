@@ -113,7 +113,7 @@ function Account() {
           <h4>Username: {userObject.userName}</h4>
           <h4>Email: {userObject.email}</h4>
           <div className="row">
-            <img src={userObject.photoUrl}></img>
+            <img className="bigPic" src={userObject.photoUrl}></img>
             <div className="column">
               <Link to="/tweet">
                 <button>Create Tweet</button>

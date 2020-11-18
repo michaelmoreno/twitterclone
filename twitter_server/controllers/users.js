@@ -132,4 +132,53 @@ users.delete("/:id", (req, res) => {
   });
 });
 
+users.patch("/:id/like", (req, res) => {
+  let tweetId = req.params.id;
+  let uid = req.body.uid;
+  let bool = req.body.bool;
+  console.log("beginning like function", req.body, req.params.id);
+
+  User.findById(uid, (err, foundUser) => {
+    if (err) {
+      console.log(err.message);
+    } else {
+      // get likes from foundTweet
+      // also has to be a user function.
+      if (bool) {
+        // liking tweet
+        User.findOneAndUpdate(
+          { _id: uid },
+          { likes: [...foundUser.likes, tweetId.toString()] },
+          (error, updatedUser) => {
+            if (error) {
+              console.log(error.message);
+            } else {
+              console.log(updatedUser);
+              res.status(200).json(updatedUser);
+            }
+          }
+        );
+      } else {
+        // unliking tweet
+        let arr = [...foundUser.likes].splice(
+          foundUser.likes.indexOf(tweetId),
+          1
+        );
+        User.findOneAndUpdate(
+          { _id: uid },
+          { likes: [...arr] },
+          (error, updatedUser) => {
+            if (error) {
+              console.log(error.message);
+            } else {
+              console.log(updatedUser);
+              res.status(200).json(updatedUser);
+            }
+          }
+        );
+      }
+    }
+  });
+});
+
 module.exports = users;

@@ -81,7 +81,7 @@ function ViewUser() {
         <div>
           <h4>Email: {viewingUser.email}</h4>
           <div className="row">
-            <img src={viewingUser.photoUrl}></img>
+            <img className="bigPic" src={viewingUser.photoUrl}></img>
           </div>
           <div>
             <h5>{viewingUser.userName}'s Tweets</h5>
