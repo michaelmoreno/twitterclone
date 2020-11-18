@@ -6,7 +6,9 @@ const userSchema = mongoose.Schema(
     photoUrl: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    tweets: [{ id: { type: Number, required: true } }],
+    tweets: [{ type: String, required: true }],
+    bio: { type: String, default: "Tell us about yourself!" },
+    likes: [{ type: String }],
   },
   { timestamps: true }
 );
