@@ -8,3 +8,5 @@ Our Mongo database has two connections: one for users, and one for tweets. The t
 any tweet is a reply to another, the id's of each will be saved in each other's objects. This allows the tweets and the their replies to be recursively rendered.
 
 A tip of the hat to Sass, as well.
+
+Plus, every website has to have a dark mode.
