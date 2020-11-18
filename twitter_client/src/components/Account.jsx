@@ -72,15 +72,20 @@ function Account() {
       })
         .then((response) => {
           console.log(response);
-          response.json();
+          return response.json();
         })
         .then((json) => {
           console.log(json);
           if (!json) {
             console.log("error");
             setUserAlreadyExists(true);
+            //
+            // User already exists so go to sign in...
           } else {
             console.log("no error");
+            // setSignIn(true);
+
+            // setCreateAccount(false);
             setUserObject(json);
             setUserAlreadyExists(false);
           }
