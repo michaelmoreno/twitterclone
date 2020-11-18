@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, Switch, Route } from "react-router-dom";
-
 const Context = React.createContext();
 
 function ContextProvider({ children }) {
@@ -9,7 +8,9 @@ function ContextProvider({ children }) {
   const [photoUrl, setPhotoUrl] = useState("");
   const [userObject, setUserObject] = useState({});
   const [anonUser, setAnonUser] = useState(true);
+  //
   const [allTweets, setAllTweets] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
 
   const [yourTweets, setYourTweets] = useState([]);
   const [tweetToReply, setTweetToReply] = useState({});
@@ -41,6 +42,12 @@ function ContextProvider({ children }) {
       .then((json) => setAllTweets(json));
   }
 
+  function queryUsers() {
+    fetch("http://localhost:3003/users")
+      .then((response) => response.json())
+      .then((json) => setAllUsers(json));
+  }
+
   function myTweets(id) {
     fetch(`http://localhost:3003/tweets/by-user/${id}`, {
       method: "GET",
@@ -61,6 +68,7 @@ function ContextProvider({ children }) {
 
   useEffect(() => {
     queryTweets();
+    queryUsers();
   }, []);
 
   function handleLike(id) {
@@ -75,6 +83,19 @@ function ContextProvider({ children }) {
       .then((json) => {
         queryTweets();
         console.log(json);
+      });
+  }
+
+  function getUser(id) {
+    let user;
+    fetch(`http://localhost:3003/tweets/${id}`)
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((json) => {
+        user = json;
+        return json;
       });
   }
 
@@ -93,6 +114,7 @@ function ContextProvider({ children }) {
     if (userObject && userObject.userName) {
       myTweets(userObject._id);
     }
+    console.log(allTweets);
   }, [allTweets]);
 
   return (
@@ -118,6 +140,8 @@ function ContextProvider({ children }) {
         yourTweets,
         setYourTweets,
         queryTweets,
+        allUsers,
+        setAllUsers,
       }}
     >
       {children}

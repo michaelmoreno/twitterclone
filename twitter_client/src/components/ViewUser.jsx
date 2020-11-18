@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import Tweet from "./Tweet";
 import sha256 from "crypto-js/sha256";
 
-function Account() {
+function ViewUser(props) {
+  let uid = props.userId;
+
   const {
     username,
     setUsername,
@@ -23,85 +25,7 @@ function Account() {
     handleDelete,
   } = useContext(Context);
 
-  const [showInputs, setShowInputs] = useState(false);
-  //
-  const [inputUsername, setInputUsername] = useState("");
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputPassword, setInputPassword] = useState("");
-  //
-  const [displayVal, setDisplayVal] = useState("none");
-  //
-  const [createAccount, setCreateAccount] = useState(false);
-  const [signIn, setSignIn] = useState(true);
-
-  const [userAlreadyExists, setUserAlreadyExists] = useState(false);
-
-  useEffect(() => {
-    if (showInputs) {
-      setDisplayVal("initial");
-    } else {
-      setDisplayVal("none");
-    }
-  }, [showInputs]);
-
-  function handleAccountRequest() {
-    console.log("account login or sign up started.");
-
-    let shaPassword = sha256(inputPassword);
-    let data = {
-      userName: inputUsername,
-      email: inputEmail,
-      password: shaPassword.toString(),
-      photoUrl,
-    };
-
-    let dataNoUrl = {
-      userName: inputUsername,
-      email: inputEmail,
-      password: shaPassword.toString(),
-    };
-
-    if (createAccount) {
-      fetch("http://localhost:3003/users/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "cors",
-        body: JSON.stringify(data),
-      })
-        .then((response) => {
-          console.log(response);
-          response.json();
-        })
-        .then((json) => {
-          console.log(json);
-          if (!json) {
-            console.log("error");
-            setUserAlreadyExists(true);
-          } else {
-            console.log("no error");
-            setUserObject(json);
-            setUserAlreadyExists(false);
-          }
-        });
-    } else if (signIn) {
-      fetch("http://localhost:3003/users/sign-in", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "cors",
-        body: JSON.stringify(dataNoUrl),
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          console.log(json);
-          setUserObject(json[0]);
-          setUserAlreadyExists(false);
-        });
-    }
-  }
+  const [viewingUser, setViewingUser] = useState({});
 
   // have to populate yourtweets and yourreplies
   return (
@@ -251,4 +175,4 @@ function Account() {
   );
 }
 
-export default Account;
+export default ViewUser;

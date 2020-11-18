@@ -29,8 +29,19 @@ users.get("/", (req, res) => {
   });
 });
 
+users.get("/:id", (req, res) => {
+  User.findById(req.params.id, (err, foundUser) => {
+    if (err) {
+      console.log(err.message);
+    } else {
+      res.status(200).json(foundUser);
+    }
+  });
+});
+
 users.post("/sign-in", (req, res) => {
-  User.findOne({ userEmail: req.body.userEmail }, (err, foundUsers) => {
+  User.find({ email: req.body.email }, (err, foundUsers) => {
+    console.log("signing in", foundUsers);
     if (err) {
       console.log(err.message);
     } else {
@@ -39,11 +50,38 @@ users.post("/sign-in", (req, res) => {
   });
 });
 
+users.post("/newPost/:userId/:postId", (req, res) => {
+  console.log("adding tweet");
+  console.log(req.body);
+  User.findById(req.params.userId, (err, foundUser) => {
+    console.log("user who tweeted:", foundUser);
+    if (err) {
+      console.log(err.message);
+    } else {
+      // res.status(200).json(foundUsers);
+      console.log(foundUser);
+      User.findByIdAndUpdate(
+        req.params.userId,
+        {
+          tweets: [...foundUser.tweets, req.params.postId],
+        },
+        (err, updatedUser) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.status(200).json(updatedUser);
+          }
+        }
+      );
+    }
+  });
+});
+
 // create
 users.post("/create", (req, res) => {
   console.log(req.body);
 
-  User.findOne({ email: req.body.email }, (err, foundUsers) => {
+  User.find({ email: req.body.email }, (err, foundUsers) => {
     if (err) {
       console.log(err.message);
     } else {

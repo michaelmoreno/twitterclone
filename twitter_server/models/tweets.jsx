@@ -2,15 +2,12 @@ const mongoose = require("mongoose");
 
 const tweetsSchema = mongoose.Schema(
   {
-    author: { type: Number, required: true },
+    author: { type: String, required: true },
     authorName: { type: String, required: true },
     text: { type: String, required: true },
-    likes: { type: String, default: 0 },
-    replies: [
-      {
-        _id: { type: Number, required: true },
-      },
-    ],
+    likes: [{ type: String }],
+    replyTo: { type: String },
+    replies: [{ type: String }],
   },
   { timestamps: true }
 );

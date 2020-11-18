@@ -63,3 +63,49 @@ code {
   height: 30vh;
   width: 60vw;
 }
+
+.reply {
+  right: 1vw;
+  position: relative;
+  margin-top: 1vh;
+  /* margin-right: -10vw; */
+  margin-bottom: 2%;
+  display: flex;
+  width: 30vw;
+}
+
+.tweetBody {
+  border-radius: 25px;
+  background-color: rgb(57, 224, 227, 0.1);
+  width: 60vw;
+  padding-left: 5%;
+  margin-bottom: 4%;
+  margin-top: 4%;
+  border: black;
+  box-sizing: inherit;
+}
+
+.spaceBetween {
+  justify-content: space-between;
+}
+
+.spaceAround {
+  justify-content: space-around;
+}
+
+.newsfeed {
+  max-width: 70vw;
+}
+
+.tweetText {
+  background-color: lightblue;
+  padding-left: 3%;
+  padding-right: 3%;
+  border-radius: 25px;
+}
+
+.tinyPhoto {
+  border-radius: 100%;
+  width: 70px;
+  height: auto;
+}

@@ -42,7 +42,12 @@ tweets.get("/by-user/:id", (req, res) => {
 // create
 tweets.post("/", (req, res) => {
   Tweet.create(
-    { author: req.body.author, text: req.body.text },
+    {
+      author: req.body.author,
+      text: req.body.text,
+      authorName: req.body.authorName,
+      replyTo: req.body.replyTo,
+    },
     (error, createdTweet) => {
       if (error) {
         console.log(error.message);
@@ -51,6 +56,31 @@ tweets.post("/", (req, res) => {
       }
     }
   );
+});
+
+tweets.patch("/reply", (req, res) => {
+  console.log(
+    `replying. original: ${req.body.originalId}, reply: ${req.body.replyId}`
+  );
+
+  Tweet.findById(req.body.originalId, (error, foundTweet) => {
+    console.log("found tweet", foundTweet);
+
+    Tweet.findOneAndUpdate(
+      { _id: req.body.originalId },
+      {
+        replies: [...foundTweet.replies, `${req.body.replyId}`],
+      },
+      (error, updatedTweet) => {
+        if (error) {
+          console.log(error.message);
+        } else {
+          console.log("updated tweet", updatedTweet);
+          res.status(200).send(updatedTweet);
+        }
+      }
+    );
+  });
 });
 
 // update
