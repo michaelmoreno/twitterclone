@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema(
     email: { type: String, required: true },
     password: { type: String, required: true },
     tweets: [{ type: String, required: true }],
+    bio: { type: String, default: "Tell us about yourself!" },
     likes: [{ type: String }],
   },
   { timestamps: true }

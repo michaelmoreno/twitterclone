@@ -106,14 +106,12 @@ function ContextProvider({ children }) {
   }
 
   function getUser(id) {
-    let user;
-    fetch(`http://localhost:3003/tweets/${id}`)
+    fetch(`http://localhost:3003/users/${id}`)
       .then((response) => {
         console.log(response);
         return response.json();
       })
       .then((json) => {
-        user = json;
         return json;
       });
   }
@@ -166,6 +164,7 @@ function ContextProvider({ children }) {
         tweetToEdit,
         setTweetToEdit,
         handleEdit,
+        queryUsers,
       }}
     >
       {children}

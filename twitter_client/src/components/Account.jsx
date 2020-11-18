@@ -106,14 +106,23 @@ function Account() {
   // have to populate yourtweets and yourreplies
   return (
     <div className="row app">
-      <h2>{username ? `${username}'s Account` : ""}</h2>
+      <div className="row">
+        <h2>{username ? `${username}'s Account` : ""}</h2>
+        {username && (
+          <Link to="/account/edit">
+            <button>Edit Account</button>
+          </Link>
+        )}
+      </div>
       {userAlreadyExists && <h4>User Already Exists!</h4>}
       {userObject && userObject.userName ? (
         <div>
           <h4>Username: {userObject.userName}</h4>
+
           <h4>Email: {userObject.email}</h4>
           <div className="row">
             <img className="bigPic" src={userObject.photoUrl}></img>
+            {userObject.bio && <p>{userObject.bio}</p>}
             <div className="column">
               <Link to="/tweet">
                 <button>Create Tweet</button>

@@ -102,25 +102,6 @@ users.post("/create", (req, res) => {
   });
 });
 
-// update
-users.put("/:id", (req, res) => {
-  console.log("server put", req.params.id);
-  console.log("body", req.body);
-  User.findOneAndUpdate(
-    { _id: req.params.id },
-    { title: req.body.title, url: req.body.url },
-    { new: true },
-    (error, updatedUser) => {
-      if (error) {
-        console.log(error.message);
-      } else {
-        console.log(updatedUser);
-        res.status(200).json(updatedUser);
-      }
-    }
-  );
-});
-
 // delete
 users.delete("/:id", (req, res) => {
   User.findByIdAndRemove(req.params.id, (error, deletedUser) => {
@@ -181,4 +162,42 @@ users.patch("/:id/like", (req, res) => {
   });
 });
 
+users.put("/edit", (req, res) => {
+  console.log("editting account", req.body);
+  let uid = req.body.uid;
+  let newBio = req.body.newBio;
+  let newUrl = req.body.newUrl;
+
+  User.findByIdAndUpdate(
+    uid,
+    { bio: newBio.toString(), photoUrl: newUrl.toString() },
+    (error, updatedUser) => {
+      if (error) {
+        console.log(error.message);
+      } else {
+        console.log(updatedUser);
+        res.status(200).json(updatedUser);
+      }
+    }
+  );
+});
+
+// update
+users.put("/:id", (req, res) => {
+  console.log("server put", req.params.id);
+  console.log("body", req.body);
+  User.findOneAndUpdate(
+    { _id: req.params.id },
+    { title: req.body.title, url: req.body.url },
+    { new: true },
+    (error, updatedUser) => {
+      if (error) {
+        console.log(error.message);
+      } else {
+        console.log(updatedUser);
+        res.status(200).json(updatedUser);
+      }
+    }
+  );
+});
 module.exports = users;

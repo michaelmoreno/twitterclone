@@ -23,6 +23,7 @@ function ViewUser() {
     handleDelete,
     viewUserId,
     setViewUserId,
+    queryUsers,
   } = useContext(Context);
 
   const [viewingUser, setViewingUser] = useState({});
@@ -73,35 +74,66 @@ function ViewUser() {
     }
   }, [userTweets, idArray]);
 
+  function editAccount() {
+    fetch("http://localhost:3003/users/edit", {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ uid: userObject._id.toString(), newBio, newUrl }),
+    })
+      .then((response) => response.json())
+      .then((json) => setUserObject(json));
+
+    fetch(`http://localhost:3003/users/${userObject._id}`)
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((json) => {
+        setUserObject(json);
+        return json;
+      });
+
+    queryUsers();
+  }
+
+  const [newUrl, setNewUrl] = useState("");
+  const [newBio, setNewBio] = useState("");
   // have to populate yourtweets and yourreplies
   return (
     <div className="row app">
-      <h2>{viewingUser.userName}</h2>
-      {viewingUser && viewingUser.userName ? (
+      <h2>{username}: Edit Your Account</h2>
+      {username ? (
         <div>
-          <h4>Email: {viewingUser.email}</h4>
-          <div className="row">
-            <img className="bigPic" src={viewingUser.photoUrl}></img>
+          <h4>Email: {userObject.email}</h4>
+          <div className="column">
+            <img className="bigPic" src={userObject.photoUrl}></img>
+            <div className="row">
+              <h4>Change Photo: </h4>
+              <input
+                type="text"
+                value={newUrl}
+                onChange={(e) => setNewUrl(e.target.value)}
+                placeholder={`${userObject.photoUrl}`}
+              ></input>
+            </div>
           </div>
-          <p>{viewingUser.bio ? `${viewingUser.bio}` : ""}</p>
           <div>
-            <h5>{viewingUser.userName}'s Tweets</h5>
-            <ul>
-              {userTweets &&
-                userTweets.map((tweet) => {
-                  return <Tweet tweet={tweet} />;
-                })}
-            </ul>
+            <h4>Change Bio:</h4>
+            <input
+              className="textBox"
+              type="text"
+              value={newBio}
+              onChange={(e) => setNewBio(e.target.value)}
+              placeholder={`${userObject.bio}`}
+            ></input>
           </div>
-          <div>
-            <h5>Replies To {viewingUser.userName}</h5>
-            <ul>
-              {repliesToUser &&
-                repliesToUser.map((reply) => {
-                  return <Tweet tweet={reply} />;
-                })}
-            </ul>
-          </div>
+          <Link to="/account">
+            <button type="button" onClick={() => editAccount()}>
+              Change It Up
+            </button>
+          </Link>
         </div>
       ) : (
         <div></div>

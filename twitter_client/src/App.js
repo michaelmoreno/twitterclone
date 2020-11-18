@@ -10,6 +10,7 @@ import ViewUser from "./components/ViewUser";
 import Navbar from "./components/Navbar";
 import NewReply from "./components/NewReply";
 import NewTweet from "./components/NewTweet";
+import EditAccount from "./components/EditAccount";
 
 // two models: one for authentication and one for tweets
 
@@ -36,6 +37,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Newsfeed />
+          </Route>
+          <Route path="/account/edit">
+            <EditAccount />
           </Route>
           <Route path="/account">
             <Account />

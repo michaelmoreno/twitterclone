@@ -145,7 +145,7 @@ function Tweet(props) {
           <p className="likeNumber">{likesNumber}</p>
         </span>
         <div
-          className="column leftBit"
+          className="column leftMore"
           style={{
             display: `${
               userObject && userObject._id === tweet.author ? "initial" : "none"
