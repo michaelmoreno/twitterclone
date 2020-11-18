@@ -1,3 +1,11 @@
+* {
+  margin: 0;
+}
+
+#root {
+  display: flex;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -15,84 +23,40 @@ code {
   display: flex;
   height: 100vh;
   max-width: 1300px;
-  margin-left: auto;
   margin-right: auto;
+  margin-left: auto;
   padding: 0 10px;
 }
 
-/* jesse's css */
-
-.row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.feed {
+  border-right: 1px solid var(--twitter-background);
+  flex: 0.4;
+  min-width: 250px;
+  margin-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .Navbar {
-  width: 80vw;
-  margin-left: 10vw;
-  border-radius: 25px;
-  background-color: rgb(57, 224, 227, 0.4);
+  border-right: 1px solid var(--twitter-background);
+  flex: 0.3;
+  min-width: 250px;
+  margin-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-.app {
-  margin: 0 auto;
-  position: relative;
-  display: inline-block;
-  margin-left: 30vw;
-  margin-right: 30vw;
+.rightbar {
+  flex: 30%;
+  max-width: 30%;
 }
 
-.leftMore {
-  margin-left: 40vw;
-}
-
-.leftSome {
-  margin-left: 10vw;
-}
-
-.leftBit {
-  margin-left: 3vw;
-}
-
-.rightSome {
-  margin-right: 10vw;
-}
-
-.rightBit {
-  margin-right: 3vw;
-}
-#createAccountScreen {
-  border-radius: 25px;
-  width: 50vw;
-  background-color: rgb(57, 224, 227, 0.1);
-}
-
-.textBox {
-  height: 30vh;
-  width: 60vw;
-}
-
-.reply {
-  right: 1vw;
-  position: relative;
-  margin-top: 1vh;
-  /* margin-right: -10vw; */
-  margin-bottom: 2%;
-  display: flex;
-  width: 30vw;
-}
+/* Jesse's code */
 
 .tweetBody {
   border-radius: 25px;
   background-color: rgb(57, 224, 227, 0.1);
-  width: 60vw;
+  /* width: 60vw; */
   padding-left: 5%;
   margin-bottom: 4%;
   margin-top: 4%;
@@ -100,23 +64,14 @@ code {
   box-sizing: inherit;
 }
 
-.spaceBetween {
-  justify-content: space-between;
-}
-
 .spaceAround {
   justify-content: space-around;
 }
 
-.newsfeed {
-  max-width: 70vw;
-}
-
-.tweetText {
-  background-color: lightblue;
-  padding-left: 3%;
-  padding-right: 3%;
-  border-radius: 25px;
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .tinyPhoto {
@@ -124,32 +79,8 @@ code {
   width: 70px;
   height: auto;
 }
-
 .teensyImg {
   /* border-radius: 100%; */
   width: 20px;
   height: auto;
-}
-
-.inline {
-  display: inline-block;
-}
-
-.likeNumber {
-  left: 130%;
-  margin-top: -100%;
-  position: relative;
-}
-
-.bigPic {
-  border-radius: 25px;
-}
-
-.heavy {
-  font-size: x-large;
-}
-
-.downBit {
-  top: 300%;
-  position: relative;
 }

@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "./Context.jsx";
 import Navbar from "./components/Navbar";
 import Feed from "./components/Feed";
+import TrendingTest from "./components/TrendingTest";
 
 // two models: one for authentication and one for tweets
 
@@ -30,7 +31,7 @@ function App() {
     >
       <Navbar />
       <Feed />
-      <Navbar />
+      <TrendingTest />
     </div>
   );
 }

@@ -19,9 +19,9 @@ function Navbar() {
     darkMode,
   } = useContext(Context);
   return (
-    <div>
+    <div className= "Navbar">
 
-<img
+        <img
           style={{ width: "2vw" }}
           src={
             darkMode
