@@ -118,12 +118,12 @@ function Account() {
             <button>Edit Account</button>
           </Link>
         )}
+
       </div>
       {userAlreadyExists && <h4>User Already Exists!</h4>}
       {userObject && userObject.userName ? (
         <div>
           <h4>Username: {userObject.userName}</h4>
-
           <h4>Email: {userObject.email}</h4>
           <div className="row">
             <img className="bigPic" src={userObject.photoUrl}></img>

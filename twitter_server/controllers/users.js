@@ -167,10 +167,15 @@ users.put("/edit", (req, res) => {
   let uid = req.body.uid;
   let newBio = req.body.newBio;
   let newUrl = req.body.newUrl;
+  let newEmail = req.body.newEmail;
 
   User.findByIdAndUpdate(
     uid,
-    { bio: newBio.toString(), photoUrl: newUrl.toString() },
+    {
+      bio: newBio.toString(),
+      photoUrl: newUrl.toString(),
+      email: newEmail.toString(),
+    },
     (error, updatedUser) => {
       if (error) {
         console.log(error.message);

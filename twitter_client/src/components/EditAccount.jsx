@@ -80,7 +80,7 @@ function ViewUser() {
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ uid: userObject._id.toString(), newBio, newUrl }),
+      body: JSON.stringify({ uid: userObject._id.toString(), newEmail, newBio, newUrl }),
     })
       .then((response) => response.json())
       .then((json) => setUserObject(json));
@@ -100,6 +100,7 @@ function ViewUser() {
 
   const [newUrl, setNewUrl] = useState("");
   const [newBio, setNewBio] = useState("");
+  const [newEmail, setNewEmail] = useState("")
   // have to populate yourtweets and yourreplies
   return (
     <div className="row app">
@@ -107,6 +108,16 @@ function ViewUser() {
       {username ? (
         <div>
           <h4>Email: {userObject.email}</h4>
+
+          <input 
+          className="textbox"
+          type='text'
+          value={newEmail}
+          onChange={(e) => setNewEmail(e.target.value)}
+          placeholder={`${userObject.email}`}
+          //
+          ></input>
+
           <div className="column">
             <img className="bigPic" src={userObject.photoUrl}></img>
             <div className="row">
