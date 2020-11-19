@@ -3,7 +3,10 @@ import React, { Component } from 'react'
 function Newsfeed() {
     return (
         <div className = 'newsfeed'>
-            News Feed:
+            News Feed Page
+            <div>
+
+            </div>
         </div>
     )
 }

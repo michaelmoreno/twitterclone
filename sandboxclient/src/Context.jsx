@@ -1,11 +1,15 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from "react";
+//Context page
+//https://reactjs.org/docs/context.html#examples
 
-export default class Context extends Component {
-    render() {
-        return (
-            <div>
-                
-            </div>
-        )
-    }
+const MyContext = React.createContext();
+
+function ContextProvider({ children }) {
+
+
+    <Context.Provider 
+        value={
+        /* some value */
+        }>
+        </Context.Provider>
 }

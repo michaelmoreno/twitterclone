@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import SidebarOption from './SidebarOption'
 
 //===============================================\\
@@ -13,8 +14,12 @@ export default class Sidebar extends Component {
     render() {
         return (
             <div className="sidebar">
+                <Link to='/'>
                 < SidebarOption text = "home" />
+                </Link>
+                <Link to ='/account'>
                 < SidebarOption text = "Account" />
+                </Link>
                 <button>Tweet</button>
             </div>
         )

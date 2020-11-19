@@ -29,7 +29,7 @@ function Newsfeed() {
     <div id="homePageTweets" className="app newsfeed">
       <h2>Welcome to Better Twitter!</h2>
       <h3>Newsfeed:</h3>
-      {matchingTweets.map((tweet) => {
+      {allTweets.map((tweet) => {
         return <Tweet tweet={tweet} />;
       })}
     </div>
