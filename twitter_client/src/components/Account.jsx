@@ -135,6 +135,7 @@ function Account() {
               <button onClick={() => setUserObject({})}>Sign Out</button>
             </div>
           </div>
+
           <div>
             <h5>Your Tweets</h5>
             <ul>
@@ -144,6 +145,7 @@ function Account() {
                 })}
             </ul>
           </div>
+
           <div>
             <h5>Replies To You</h5>
             <ul>

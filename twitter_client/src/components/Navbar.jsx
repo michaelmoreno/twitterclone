@@ -16,7 +16,31 @@ function Navbar() {
     handleLike,
     setDarkMode,
     darkMode,
+    searchVal,
+    setSearchVal,
+    matchingTweets,
+    setMatchingTweets
   } = useContext(Context);
+
+
+
+  const handleSearch = () => {
+
+    console.log(allTweets)
+    
+    let matchTweets = allTweets.filter(tweet =>
+        
+      ((tweet.text && tweet.text.includes(searchVal)) || (tweet.authorName && tweet.authorName.includes(searchVal))))
+
+
+    setMatchingTweets(matchTweets)
+
+  }
+
+
+
+
+
   return (
     <div className="column Navbar">
       <nav className="row">
@@ -32,6 +56,14 @@ function Navbar() {
             setDarkMode(!darkMode);
           }}
         ></img>
+        <input 
+          type="text" 
+          value={searchVal} 
+          onChange={(e) => {
+            setSearchVal(e.target.value); 
+            handleSearch()}} 
+          placeholder="Search Site"></input>
+
         <Link className="row leftSome heavy" to="/account">
           {username ? `${username}'s Account` : "Sign In"}
         </Link>

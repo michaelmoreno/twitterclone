@@ -20,12 +20,16 @@ function Newsfeed() {
     tweetToReply,
     setTweetToReply,
     handleDelete,
+    searchVal, 
+    setSearchVal,
+    matchingTweets, 
+    setMatchingTweets
   } = useContext(Context);
   return (
     <div id="homePageTweets" className="app newsfeed">
       <h2>Welcome to Better Twitter!</h2>
       <h3>Newsfeed:</h3>
-      {allTweets.map((tweet) => {
+      {matchingTweets.map((tweet) => {
         return <Tweet tweet={tweet} />;
       })}
     </div>

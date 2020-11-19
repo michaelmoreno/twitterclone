@@ -22,15 +22,21 @@ function ContextProvider({ children }) {
 
   const [editTweet, setEditTweet] = useState(false);
   //
+  
   //
   //
-  //
-  //
+  
   //
   const [darkMode, setDarkMode] = useState(false);
 
   const [primaryColor, setPrimaryColor] = useState("lightblue");
   const [secondaryColor, setSecondaryColor] = useState("darkblue");
+
+
+  const [searchVal, setSearchVal] = useState("")
+
+  const [matchingTweets, setMatchingTweets] = useState([]);
+
 
   function handleEdit(tweet) {
     setEditTweet(true);
@@ -58,7 +64,9 @@ function ContextProvider({ children }) {
   function queryTweets() {
     fetch("http://localhost:3003/tweets")
       .then((response) => response.json())
-      .then((json) => setAllTweets(json));
+      .then((json) => 
+      
+      {setAllTweets(json); setMatchingTweets(json)});
   }
 
   function queryUsers() {
@@ -88,7 +96,8 @@ function ContextProvider({ children }) {
   useEffect(() => {
     queryTweets();
     queryUsers();
-  }, []);
+  }, [])
+
 
   function handleLike(id, bool) {
     fetch(`http://localhost:3003/tweets/${id}/like`, {
@@ -177,6 +186,10 @@ function ContextProvider({ children }) {
         queryUsers,
         darkMode,
         setDarkMode,
+        searchVal, 
+        setSearchVal,
+        matchingTweets, 
+        setMatchingTweets
       }}
     >
       {children}
