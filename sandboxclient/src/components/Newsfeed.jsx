@@ -17,9 +17,9 @@ const {
     allTweets
 } = useContext(Context);
     return (
-        <div className = 'newsfeed'>
+        <div id="homePageTweets" className = 'newsfeed'>
             News Feed Page
-            <div>
+            <div >
             {allTweets.map((tweet) => {
                 return <Tweet tweet={tweet}/>
             })}

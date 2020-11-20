@@ -29,3 +29,41 @@ code {
 .trending {
   flex: 30%;
 }
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.tweetBody {
+  border-radius: 25px;
+  background-color: rgb(57, 224, 227, 0.1);
+  width: 60vw;
+  padding-left: 5%;
+  margin-bottom: 4%;
+  margin-top: 4%;
+  border: black;
+  box-sizing: inherit;
+}
+
+.spaceAround {
+  justify-content: space-around;
+}
+
+.tinyPhoto {
+  border-radius: 100%;
+  width: 70px;
+  height: auto;
+}
+
+.teensyImg {
+  width: 20px;
+  height: auto;
+}

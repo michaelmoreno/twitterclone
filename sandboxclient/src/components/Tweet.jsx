@@ -9,7 +9,7 @@ function Tweet(props) {
 
     let hide = props.hideReplies
 
-          //hooks used only on tweet page
+          //hooks used only on tweet page not need on context.jsx
         const [userPhoto, setUserPhoto] = useState("");
         const [isLiked, setIsLiked] = useState(false);
         const [likesNumber, setLikesNumber] = useState(0);
@@ -72,7 +72,6 @@ function Tweet(props) {
         } else {
             setLikesNumber(likesNumber + 1);
         }
-    
         handleLike(tweet._id, !isLiked);
         setIsLiked(!isLiked);
         }
@@ -81,11 +80,14 @@ function Tweet(props) {
     return(
 <div className="column tweetBody">
       <div className="op">
-        <div className="row">
-          <div className="row spaceAround">
-            
-            <img src={`${userPhoto}`} className="tinyPhoto leftBit"></img>
 
+        <div className="row">
+
+        {/* top most part of tweet body, displays the author and their photo */}
+          <div className="row spaceAround">
+            {/* img src for the tweet author */}
+            <img src={`${userPhoto}`} className="tinyPhoto leftBit"></img>
+            {/* links to the tweet authors user page */}
             <Link
               className="leftBit"
               to={`/user/${tweet.author}`}
@@ -95,8 +97,8 @@ function Tweet(props) {
             >
               <h3>{tweet.authorName}</h3>
             </Link>
-
           </div>
+              {/* Shows date tweet as made beneath user and picture */}
           {tweet.createdAt && (
             <p className="rightBit">
               Created: {tweet.createdAt.substring(0, 10)}
@@ -104,11 +106,15 @@ function Tweet(props) {
           )}
         </div>
 
+
+            {/* honestly not sure but it has some condition rendering */}
         <p className="tweetText">
           {props.editing ? `${props.editing}` : tweet.text}
         </p>
         <p>{tweet.dateCreated}</p>
 
+
+            {/* span tag for the like button and image */}
         <span
           className="inline"
           onClick={() => {
@@ -125,6 +131,8 @@ function Tweet(props) {
           ></img>
           <p className="likeNumber">{likesNumber}</p>
         </span>
+
+            {/* more conditional logic that I might not see because I'm not logged in */}
         <div
           className="column leftMore"
           style={{
@@ -138,7 +146,9 @@ function Tweet(props) {
             <button onClick={() => handleEdit(tweet)}>Edit</button>
           </Link>
         </div>
+
       </div>
+
 
       {userObject && userObject._id !== tweet.author && (
         <Link to="/tweet">
@@ -147,6 +157,8 @@ function Tweet(props) {
           </button>
         </Link>
       )}
+
+        {/* show replies base on value of hideReplies */}
       <div className="reply">
         <p>Replies:</p>
         {!hideReplies &&
@@ -154,6 +166,8 @@ function Tweet(props) {
             return <Tweet tweet={reply} />;
           })}
       </div>
+
+          {/* on click toggle the value of hideReplies to whatever it isn't */}
       <button onClick={() => setHideReplies(!hideReplies)} type="button">
         {hideReplies ? "Show Replies" : "Hide Replies"}
       </button>

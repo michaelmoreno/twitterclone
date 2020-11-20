@@ -4,7 +4,7 @@ import { Context } from "../Context.jsx";
 
 function Tweet(props) {
   let tweet = props.tweet;
-
+  authorName
   let hide = props.hideReplies;
 
   // {tweet.replies.map((reply) => {
@@ -32,26 +32,6 @@ function Tweet(props) {
   const [hideReplies, setHideReplies] = useState(false);
 
   useEffect(() => {
-    if (hide) {
-      setHideReplies(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    let newArr = [];
-
-    allTweets.forEach((i) => {
-      if (tweet.replies && tweet.replies.includes(i._id)) {
-        newArr.push(i);
-      }
-    });
-
-    setAllReplies(newArr);
-  }, [allTweets]);
-
-  const [userPhoto, setUserPhoto] = useState("");
-
-  useEffect(() => {
     console.log("running effect");
     allUsers.map((user) => {
       console.log(user);
@@ -66,16 +46,32 @@ function Tweet(props) {
     });
   }, [hideReplies]);
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [likesNumber, setLikesNumber] = useState(0);
-
-  const [loadCounter, setLoadCounter] = useState(0);
-
   useEffect(() => {
     if (tweet.likes) {
       setLikesNumber(tweet.likes.length);
     }
   }, []);
+
+  useEffect(() => {
+    if (hide) {
+      setHideReplies(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    let newArr = [];
+    allTweets.forEach((i) => {
+      if (tweet.replies && tweet.replies.includes(i._id)) {
+        newArr.push(i);
+      }
+    });
+    setAllReplies(newArr);
+  }, [allTweets]);
+
+  const [userPhoto, setUserPhoto] = useState("");
+  const [isLiked, setIsLiked] = useState(false);
+  const [likesNumber, setLikesNumber] = useState(0);
+  const [loadCounter, setLoadCounter] = useState(0);
 
   function toggleLiked() {
     if (userObject && userObject._id) {
@@ -107,7 +103,9 @@ function Tweet(props) {
       <div className="op">
         <div className="row">
           <div className="row spaceAround">
+            
             <img src={`${userPhoto}`} className="tinyPhoto leftBit"></img>
+
             <Link
               className="leftBit"
               to={`/user/${tweet.author}`}
@@ -117,6 +115,7 @@ function Tweet(props) {
             >
               <h3>{tweet.authorName}</h3>
             </Link>
+
           </div>
           {tweet.createdAt && (
             <p className="rightBit">
@@ -124,10 +123,12 @@ function Tweet(props) {
             </p>
           )}
         </div>
+
         <p className="tweetText">
           {props.editing ? `${props.editing}` : tweet.text}
         </p>
         <p>{tweet.dateCreated}</p>
+
         <span
           className="inline"
           onClick={() => {
@@ -158,6 +159,7 @@ function Tweet(props) {
           </Link>
         </div>
       </div>
+
       {userObject && userObject._id !== tweet.author && (
         <Link to="/tweet">
           <button type="button" onClick={() => setTweetToReply(tweet)}>
