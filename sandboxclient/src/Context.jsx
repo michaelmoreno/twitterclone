@@ -16,6 +16,11 @@ function ContextProvider({ children }) {
     const [userObject, setUserObject] = useState({});
     const [viewUserId, setViewUserId] = useState("")
     const [editTweet, setEditTweet] = useState(false)
+    const [username, setUsername] = useState("");
+    const [yourTweets, setYourTweets] = useState([])
+    const [photoUrl, setPhotoUrl] = useState([""])
+    const [anonUser, setAnonUser] = useState(true)
+    const [userEmail, setUserEmail] = useState("")
 
 //////////////////////////////////////////
 /////////////////handle routes for tweets
@@ -58,8 +63,26 @@ function ContextProvider({ children }) {
                 console.log(json)
             })
         }
-// ^ will take an id. The reply will be posted onto the tweet matching this id.
+        // ^ will take an id. The reply will be posted onto the tweet matching this id.
 
+        //hits tweets route pulls out all the tweets based on the users id
+        function MyTweets(id) {
+            fetch(`http://localhost:3003/tweets/by-user/${id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                mode:"cors",
+            })
+            .then((response) => {
+                console.log(response);
+                return response.json();
+            })
+            .then((json) => {
+                console.log(json);
+                setYourTweets(json);
+            })
+        }
 
 ///////////hits routes inside a subcategory of Tweets controllers/tweets 127
 function handleLike(id, bool) {
@@ -76,17 +99,35 @@ function handleLike(id, bool) {
 
 ///////////////////////////////
 
-
-
     //is used to call queryTweets and queryUsers on page read
     useEffect(() => {
         queryTweets();
         queryUsers();
     })
 
+    useEffect(() => {
+        if (userObject && userObject.userName) {
+            setUsername(userObject.userName);
+            // console.log(username);
+            MyTweets(userObject._id);
+        } else {
+            setUsername("");
+        }
+    }, [userObject])
+
     return(
     <Context.Provider 
         value={{
+            username,
+            setUsername,
+            yourTweets,
+            setYourTweets,
+            photoUrl,
+            setPhotoUrl,
+            anonUser,
+            setAnonUser,
+            userEmail,
+            setUserEmail,
             handleDelete,
             allTweets,
             queryTweets,
@@ -97,7 +138,6 @@ function handleLike(id, bool) {
             tweetToEdit,
             handleLike,
             setUserObject,
-            tweetToReply,
             setTweetToReply,
             viewUserId,
             setViewUserId,

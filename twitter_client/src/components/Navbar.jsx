@@ -25,25 +25,17 @@ function Navbar() {
 
 
   const handleSearch = () => {
-
     console.log(allTweets)
-    
     let matchTweets = allTweets.filter(tweet =>
-        
       ((tweet.text && tweet.text.includes(searchVal)) || (tweet.authorName && tweet.authorName.includes(searchVal))))
-
-
     setMatchingTweets(matchTweets)
-
   }
-
-
-
-
 
   return (
     <div className="column Navbar">
       <nav className="row">
+
+        {/* img tag to handle darkmode */}
         <img
           className="teensyImg leftBit"
           style={{ width: "2vw" }}
@@ -56,6 +48,9 @@ function Navbar() {
             setDarkMode(!darkMode);
           }}
         ></img>
+{/*  */}
+
+{/* search bar to filter through tweets */}
         <input 
           type="text" 
           value={searchVal} 
@@ -64,6 +59,8 @@ function Navbar() {
             handleSearch()}} 
           placeholder="Search Site"></input>
 
+
+{/* sign in and home page links */}
         <Link className="row leftSome heavy" to="/account">
           {username ? `${username}'s Account` : "Sign In"}
         </Link>
