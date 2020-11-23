@@ -50,12 +50,19 @@ function Account() {
 
     function handleAccountRequest() {
         console.log('account login or sign up started');
+
         let shaPassword = sha256(inputPassword);
         let data = {
             userName: inputUsername,
             email: inputEmail,
             password: shaPassword.toString(),
         };
+        let dataNoUrl = {
+            userName: inputUsername,
+            email: inputEmail,
+            password: shaPassword.toString(),
+        };
+
         if (createAccount) {
             fetch('http://localhost:3003/users/create', {
                 method:'POST',
@@ -163,7 +170,6 @@ function Account() {
               type="button"
               onClick={() => {
                 setSignIn(true);
-
                 setCreateAccount(false);
               }}
             >
