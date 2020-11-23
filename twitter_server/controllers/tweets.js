@@ -16,6 +16,10 @@ const Tweet = tweetsConn.model("Tweet", require("../models/tweets.jsx"));
 
 Tweet.init();
 
+// Tweet.deleteMany({}, () => {
+//   console.log("tweets deleted");
+// });
+
 // index
 tweets.get("/", (req, res) => {
   Tweet.find({}, (err, foundTweets) => {
@@ -34,6 +38,7 @@ tweets.get("/by-user/:id", (req, res) => {
       console.log(err.message);
     } else {
       console.log(foundTweets);
+      console.log(req.params.id);
       res.status(200).json(foundTweets);
     }
   });
