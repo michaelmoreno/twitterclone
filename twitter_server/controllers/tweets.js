@@ -1,6 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const tweets = express.Router();
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const options = {
   useNewUrlParser: true,
@@ -9,7 +11,7 @@ const options = {
 };
 
 const tweetsConn = mongoose.createConnection(
-  "mongodb://localhost:27017/tweets",
+  process.env.MONGODB_URI_TWEET,
   options
 );
 const Tweet = tweetsConn.model("Tweet", require("../models/tweets.jsx"));
@@ -19,8 +21,23 @@ Tweet.init();
 // Tweet.deleteMany({}, () => {
 //   console.log("tweets deleted");
 // });
-
 // index
+
+// const corsOptions = {
+//   origin: "https://twittrrr.herokuapp.com",
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   preflightContinue: true,
+//   optionsSuccessStatus: 204,
+// };
+
+// const corsOptions = {
+//   origin: "*",
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   preflightContinue: false,
+//   optionsSuccessStatus: 204,
+// };
+
+// tweets.use(cors(corsOptions));
 tweets.get("/", (req, res) => {
   Tweet.find({}, (err, foundTweets) => {
     if (err) {

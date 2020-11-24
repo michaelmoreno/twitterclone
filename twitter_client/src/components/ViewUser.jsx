@@ -34,7 +34,13 @@ function ViewUser() {
   const [idArray, setIdArray] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3003/users/${viewUserId}`)
+    fetch(`https://twit-serve.herokuapp.com/users/${viewUserId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+    })
       .then((response) => response.json())
       .then((json) => {
         console.log(`viewing user: ${JSON.stringify(json)}`);

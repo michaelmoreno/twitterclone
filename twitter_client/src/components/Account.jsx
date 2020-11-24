@@ -62,7 +62,7 @@ function Account() {
     };
 
     if (createAccount) {
-      fetch("http://localhost:3003/users/create", {
+      fetch("https://twit-serve.herokuapp.com/users/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -91,7 +91,7 @@ function Account() {
           }
         });
     } else if (signIn) {
-      fetch("http://localhost:3003/users/sign-in", {
+      fetch("https://twit-serve.herokuapp.com/users/sign-in", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -118,7 +118,6 @@ function Account() {
             <button>Edit Account</button>
           </Link>
         )}
-
       </div>
       {userAlreadyExists && <h4>User Already Exists!</h4>}
       {userObject && userObject.userName ? (

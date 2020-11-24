@@ -38,7 +38,7 @@ function NewTweet() {
       date.pop();
       let newDate = date.join(" ");
 
-      fetch("http://localhost:3003/tweets/edit", {
+      fetch("https://twit-serve.herokuapp.com/tweets/edit", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +54,7 @@ function NewTweet() {
       queryTweets();
     } else {
       console.log("publish tweet clicked");
-      fetch("http://localhost:3003/tweets/", {
+      fetch("https://twit-serve.herokuapp.com/tweets/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,7 +76,7 @@ function NewTweet() {
           let id = json._id;
 
           if (tweetToReply._id) {
-            fetch("http://localhost:3003/tweets/reply", {
+            fetch("https://twit-serve.herokuapp.com/tweets/reply", {
               method: "PATCH",
               headers: {
                 "Content-Type": "application/json",
@@ -90,13 +90,16 @@ function NewTweet() {
               .then((response) => response.json())
               .then((json) => console.log(json));
           }
-          fetch(`http://localhost:3003/users/newPost/${userObject._id}/${id}`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            mode: "cors",
-          })
+          fetch(
+            `https://twit-serve.herokuapp.com/users/newPost/${userObject._id}/${id}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              mode: "cors",
+            }
+          )
             .then((response) => response.json())
             .then((json) => console.log(json));
           setTweetToReply({});

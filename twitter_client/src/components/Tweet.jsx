@@ -68,9 +68,6 @@ function Tweet(props) {
 
   const [isLiked, setIsLiked] = useState(false);
   const [likesNumber, setLikesNumber] = useState(0);
-
-  const [loadCounter, setLoadCounter] = useState(0);
-
   useEffect(() => {
     if (tweet.likes) {
       setLikesNumber(tweet.likes.length);

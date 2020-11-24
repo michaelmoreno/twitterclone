@@ -22,21 +22,19 @@ function ContextProvider({ children }) {
 
   const [editTweet, setEditTweet] = useState(false);
   //
-  
+
   //
   //
-  
+
   //
   const [darkMode, setDarkMode] = useState(false);
 
   const [primaryColor, setPrimaryColor] = useState("lightblue");
   const [secondaryColor, setSecondaryColor] = useState("darkblue");
 
-
-  const [searchVal, setSearchVal] = useState("")
+  const [searchVal, setSearchVal] = useState("");
 
   const [matchingTweets, setMatchingTweets] = useState([]);
-
 
   function handleEdit(tweet) {
     setEditTweet(true);
@@ -46,7 +44,7 @@ function ContextProvider({ children }) {
 
   function handleDelete(id) {
     console.log("beginning delete", id);
-    fetch(`http://localhost:3003/tweets/${id}`, {
+    fetch(`https://twit-serve.herokuapp.com/tweets/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -62,21 +60,34 @@ function ContextProvider({ children }) {
   // ^ will take an id. The reply will be posted onto the tweet matching this id.
 
   function queryTweets() {
-    fetch("http://localhost:3003/tweets")
+    fetch("https://twit-serve.herokuapp.com/tweets", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+    })
       .then((response) => response.json())
-      .then((json) => 
-      
-      {setAllTweets(json); setMatchingTweets(json)});
+      .then((json) => {
+        setAllTweets(json);
+        setMatchingTweets(json);
+      });
   }
 
   function queryUsers() {
-    fetch("http://localhost:3003/users")
+    fetch("https://twit-serve.herokuapp.com/users", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+    })
       .then((response) => response.json())
       .then((json) => setAllUsers(json));
   }
 
   function myTweets(id) {
-    fetch(`http://localhost:3003/tweets/by-user/${id}`, {
+    fetch(`https://twit-serve.herokuapp.com/tweets/by-user/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -96,11 +107,10 @@ function ContextProvider({ children }) {
   useEffect(() => {
     queryTweets();
     queryUsers();
-  }, [])
-
+  }, []);
 
   function handleLike(id, bool) {
-    fetch(`http://localhost:3003/tweets/${id}/like`, {
+    fetch(`https://twit-serve.herokuapp.com/tweets/${id}/like`, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
@@ -112,7 +122,7 @@ function ContextProvider({ children }) {
         // queryTweets();
         console.log(json);
 
-        fetch(`http://localhost:3003/users/${id}/like`, {
+        fetch(`https://twit-serve.herokuapp.com/users/${id}/like`, {
           method: "PATCH",
           headers: {
             "Content-type": "application/json",
@@ -125,7 +135,13 @@ function ContextProvider({ children }) {
   }
 
   function getUser(id) {
-    fetch(`http://localhost:3003/users/${id}`)
+    fetch(`https://twit-serve.herokuapp.com/users/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+    })
       .then((response) => {
         console.log(response);
         return response.json();
@@ -186,10 +202,10 @@ function ContextProvider({ children }) {
         queryUsers,
         darkMode,
         setDarkMode,
-        searchVal, 
+        searchVal,
         setSearchVal,
-        matchingTweets, 
-        setMatchingTweets
+        matchingTweets,
+        setMatchingTweets,
       }}
     >
       {children}

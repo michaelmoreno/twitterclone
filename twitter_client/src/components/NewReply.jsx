@@ -20,9 +20,12 @@ function NewReply() {
   const [replyText, setReplyText] = useState("");
 
   function publishReply() {
-    fetch("https://localhost:3003/replies", {
+    fetch("https://twit-serve.herokuapp.com/replies", {
       method: "POST",
-      "Content-type": "application/json",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
       body: JSON.stringify({
         replyText,
         userEmail,

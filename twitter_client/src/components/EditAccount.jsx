@@ -35,7 +35,13 @@ function ViewUser() {
   const [idArray, setIdArray] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3003/users/${viewUserId}`)
+    fetch(`https://twit-serve.herokuapp.com/users/${viewUserId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+    })
       .then((response) => response.json())
       .then((json) => {
         console.log(`viewing user: ${JSON.stringify(json)}`);
@@ -75,17 +81,28 @@ function ViewUser() {
   }, [userTweets, idArray]);
 
   function editAccount() {
-    fetch("http://localhost:3003/users/edit", {
+    fetch("https://twit-serve.herokuapp.com/users/edit", {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ uid: userObject._id.toString(), newEmail, newBio, newUrl }),
+      body: JSON.stringify({
+        uid: userObject._id.toString(),
+        newEmail,
+        newBio,
+        newUrl,
+      }),
     })
       .then((response) => response.json())
       .then((json) => setUserObject(json));
 
-    fetch(`http://localhost:3003/users/${userObject._id}`)
+    fetch(`https://twit-serve.herokuapp.com/users/${userObject._id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+    })
       .then((response) => {
         console.log(response);
         return response.json();
@@ -100,7 +117,7 @@ function ViewUser() {
 
   const [newUrl, setNewUrl] = useState("");
   const [newBio, setNewBio] = useState("");
-  const [newEmail, setNewEmail] = useState("")
+  const [newEmail, setNewEmail] = useState("");
   // have to populate yourtweets and yourreplies
   return (
     <div className="row app">
@@ -109,13 +126,13 @@ function ViewUser() {
         <div>
           <h4>Email: {userObject.email}</h4>
 
-          <input 
-          className="textbox"
-          type='text'
-          value={newEmail}
-          onChange={(e) => setNewEmail(e.target.value)}
-          placeholder={`${userObject.email}`}
-          //
+          <input
+            className="textbox"
+            type="text"
+            value={newEmail}
+            onChange={(e) => setNewEmail(e.target.value)}
+            placeholder={`${userObject.email}`}
+            //
           ></input>
 
           <div className="column">

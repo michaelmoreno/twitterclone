@@ -1,6 +1,15 @@
+require("dotenv").config();
 const express = require("express");
 const users = express.Router();
 const mongoose = require("mongoose");
+const cors = require("cors");
+
+// const corsOptions = {
+//   origin: "*",
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   preflightContinue: false,
+//   optionsSuccessStatus: 204,
+// };
 
 const options = {
   useNewUrlParser: true,
@@ -9,10 +18,19 @@ const options = {
 };
 
 const usersConn = mongoose.createConnection(
-  "mongodb://localhost:27017/users",
+  process.env.MONGODB_URI_USER,
   options
 );
 const User = usersConn.model("User", require("../models/users.jsx"));
+
+// const corsOptions = {
+//   origin: "https://twittrrr.herokuapp.com",
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   preflightContinue: true,
+//   optionsSuccessStatus: 204,
+// };
+
+// users.use(cors(corsOptions));
 
 // const { create } = require("../models/users.jsx");
 
